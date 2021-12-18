@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="jumbotron mb-4">
+        <h1 class="display-4">Welcome to Carbon Impact</h1>
+        <p class="lead">See the real impact of your daily routine!</p>
+        <!-- <img src="../static/img/map.jpg" class="img-fluid" alt="Responsive image"> -->
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="row">
+            <div class="col">
+                <a href="/car_impact" class="btn btn-light btn-lg" role="button" aria-pressed="true">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../static/img/car_emission_button.jpg" alt="Card image cap">
+                        <div class="card-body">
+                          <h5 class="card-title">Car Emission Calculator</h5>
+                          <p class="card-text">Find out how much CO2 your car produces!</p>
+                        </div>
+                    </div>    
+                </a>
+            </div>
+            <div class="col">
+                <a href="/package_impact" class="btn btn-light btn-lg" role="button" aria-pressed="true">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../static/img/food_package_button.jpg" alt="Card image cap">
+                        <div class="card-body">
+                        <h5 class="card-title">Food Packaging Calculator</h5>
+                        <p class="card-text">Is your grocery packaging biodegradable?</p>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
