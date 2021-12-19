@@ -42,7 +42,7 @@ def find_co2_emis(df_co2, make: str, model: str, cylinder: int, transmission: st
 
 def predict_emissions(df_co2, fuelType, fuelCombo, cylinders, transmission):
     emissions = df_co2['CO2 Emissions(g/km)']
-    fuelTypes =['diesal', 'ethanol', 'natural gas', 'regular', 'premium']
+    fuelTypes =['diesel', 'ethanol', 'natural gas', 'regular', 'premium']
     adj_df = df_co2.copy()
     encodedType = pd.get_dummies(adj_df['Fuel Type'])
     adj_df.drop(['Model','Make','Vehicle Class','Fuel Type', 'CO2 Emissions(g/km)'], axis  = 1, inplace = True)
