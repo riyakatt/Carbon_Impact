@@ -7,10 +7,10 @@
 {% block content %}
     <h1>Car Emission Impact Calculator</h1>
 
-    <form class="form-inline bg-info text-light rounded">
+    <form class="form-inline bg-info text-light rounded" method="post">
         <div class="form-group m-2">
             <label class="m-2" for="car_make">What is your car's make? </label>
-            <select class="selectpicker" id="car_make" data-live-search="true" data-size="6">
+            <select class="selectpicker" id="car_make" name="make" data-live-search="true" data-size="6">
                 {% for make in car_make_options %}
                 <option>{{ make }}</option>
                 {% endfor %}
@@ -18,24 +18,93 @@
         </div>    
         <div class="form-group m-2">
             <label class="m-2" for="car_model">What is your car's model? </label>
-            <select class="selectpicker" id="car_model" data-live-search="true" data-size="6">
+            <select class="selectpicker" id="car_model" name="model" data-live-search="true" data-size="6">
                 {% for model in car_model_options %}
                 <option>{{ model }}</option>
                 {% endfor %}
             </select>
         </div>
         <div class="form-group m-2">
-            <label class="m-2" for="car_model">What is your car's model? </label>
-            <select class="selectpicker" id="car_model" data-live-search="true" data-size="6">
-                {% for model in car_model_options %}
-                <option>{{ model }}</option>
+            <label class="m-2" for="car_cylinders">How many cylinders does your car have?</label>
+            <select class="selectpicker" id="car_cylinders" name="cylinders" data-live-search="true" data-size="6">
+                {% for val in car_cylinders_options %}
+                <option>{{ val }}</option>
                 {% endfor %}
+            </select>
+        </div>
+        <div class="form-group m-2">
+            <label class="m-2" for="car_transmision">What kind of transmission does your car have?</label>
+            <select class="selectpicker" id="car_transmission" name="transmission" data-live-search="true" data-size="6">
+                <option>manual</option>
+                <option>automatic</option>
             </select>
         </div>
         <button type="submit" class="btn btn-success">Submit</button>    
     </form>
-    <p>Can't find your car? Try <a class="badge badge-primary">this!</a></p>
+    <p>Can't find your car? Try <a class="badge badge-primary" data-toggle="modal" data-target="#exampleModalCenter"> our prediction algorithm!</a></p>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Predict your Car's Emissions!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form id="predictForm" action="{{ url_for('car_impact') }}" method="POST">
+                    <div class="form-group">
+                        <label for="fuel_combo" class="col-form-label">What is your average fuel consumption(L/100km)?</label>
+                        <input type="number" class="form-control" id="fuel_combo" name="fuel_combo">
+                    </div>
+                    <div class="form-group m-2">
+                        <label class="col-form-label m-2" for="fuel_type">What fuel do you use in your car?</label>
+                        <select class="selectpicker" id="fuel_type" name="fuel_type" data-live-search="true" data-size="6">
+                            {% for val in ['diesal', 'ethanol', 'natural gas', 'regular', 'premium'] %}
+                            <option>{{ val }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group m-2">
+                        <label class="col-form-label m-2" for="car_cylinders">How many cylinders does your car have?</label>
+                        <select class="selectpicker" id="car_cylinders" name="cylinders" data-live-search="true" data-size="6">
+                            {% for val in car_cylinders_options %}
+                            <option>{{ val }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group m-2">
+                        <label class="m-2" for="car_transmision">What kind of transmission does your car have?</label>
+                        <select class="selectpicker" id="car_transmission" name="transmission" data-live-search="true" data-size="6">
+                            <option>manual</option>
+                            <option>automatic</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="predictForm">Submit</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
+    {% if emission_res is defined %}
+        <h3>You car emits {{ emission_res }} grams of CO2 per kilometer</h3>
+        <h3>A tree can absorb around 21 kilograms of CO2 per year</h3>
+        <h3>That means, if you drove 1000 kilometers, it would take close to {{ n_trees }} trees to absorb your pollution:</h3>
+        {% for i in range(n_trees) %}
+        <i class="fas fa-tree fa-5x"></i> 
+        {% endfor %}
+    {% endif %} 
+    {% if formError is defined %}
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error:</strong> {{ formError }}
+    </div>
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}

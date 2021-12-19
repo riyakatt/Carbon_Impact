@@ -1,0 +1,15 @@
+.gcloudignore
+.git
+.gitignore
+emission_analysis/
+# Python pycache:
+__pycache__/
+
+# Ignored by the build system
+/setup.cfg
+
+#python venv
+.venv
+
+#system files
+.vscode
