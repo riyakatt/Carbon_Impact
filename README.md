@@ -6,7 +6,7 @@ In this project, we hope to motivate people to be more environmentally conscious
 The app has also been deployed on google cloud app engine at:
 Carbon Impact (hackathons-335614.uc.r.appspot.com)
 
-Devpost Submission Link: 
+Devpost Submission Link: https://devpost.com/submit-to/13749-aylus-humanity-hacks/manage/submissions/290317-carbon-impact/project_details/edit
  
  
 ### Developer Usage
